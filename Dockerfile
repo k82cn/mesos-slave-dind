@@ -18,9 +18,7 @@ RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 581
     mkdir -p /etc/apt/sources.list.d && \
     echo deb https://apt.dockerproject.org/repo ubuntu-trusty main > /etc/apt/sources.list.d/docker.list && \
     apt-get update -qq && \
-    DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -qqy \
-        docker-engine=${DOCKER_VERSION} \
-        && \
+    apt-get install -y docker-engine=${DOCKER_VERSION} openjdk-7-jdk && \
     apt-get clean
 
 ENV WRAPPER_VERSION 0.2.4
