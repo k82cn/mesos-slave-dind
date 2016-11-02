@@ -1,5 +1,5 @@
-FROM mesosphere/mesos-slave:1.0.11.0.1-2.0.93.ubuntu1404
-MAINTAINER Mesosphere <support@mesosphere.io>
+FROM mesosphere/mesos-slave:1.0.1-2.0.93.ubuntu1404
+MAINTAINER Klaus Ma <klaus1982.cn@gmail.com>
 
 RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -qqy \

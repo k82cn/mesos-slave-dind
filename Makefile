@@ -9,7 +9,7 @@ help:
 	@echo '  release  - create release tag from latest version'
 .PHONY: help
 
-ORG=mesosphere
+ORG=k82cn
 REPO=$(shell git rev-parse --show-toplevel | xargs basename)
 
 define image-version

@@ -190,6 +190,19 @@ fi
 # stop docker daemon on shutdown to avoid loopback leaks
 trap "service docker stop" EXIT
 
+docker_proxy=""
+
+if [ ! -z $docker_http_proxy ]
+then
+  docker_proxy="http_proxy="$docker_http_proxy
+fi
+
+if [ ! -z $docker_https_proxy ]
+then
+  docker_proxy=$docker_proxy" https_proxy="$docker_https_proxy
+fi
+
+
 # start docker daemon
 if docker daemon --help &>/dev/null; then
   DOCKER_DAEMON="docker daemon"
@@ -197,10 +210,11 @@ else
   DOCKER_DAEMON="docker -d"
 fi
 if [ "$LOG" == "file" ]; then
-  ${DOCKER_DAEMON} ${DOCKER_DAEMON_ARGS} &>/var/log/docker.log &
+  env $docker_proxy ${DOCKER_DAEMON} ${DOCKER_DAEMON_ARGS} &>/var/log/docker.log &
 else
-  ${DOCKER_DAEMON} ${DOCKER_DAEMON_ARGS} &
+  env $docker_proxy ${DOCKER_DAEMON} ${DOCKER_DAEMON_ARGS} &
 fi
+
 (( timeout = 60 + SECONDS ))
 until docker info >/dev/null 2>&1; do
   if (( SECONDS >= timeout )); then
